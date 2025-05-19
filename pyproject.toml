@@ -1,0 +1,89 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tempo_core"
+version = "0.1.0"
+description = "Unreal Engine modding library, that covers project management, automated builds, and more"
+readme = "README.md"
+requires-python = ">=3.9.1"
+license = { file = "LICENSE" }
+keywords = []
+authors = [
+  { name = "Mythical", email = "MythicalData@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = [
+  "requests",
+  "psutil",
+  "pygetwindow",
+  "screeninfo",
+  "rich",
+  "tomlkit",
+  "pywinctl",
+  "dynaconf"
+]
+
+[tool.hatch.envs.dev]
+dependencies = [
+  "pre-commit",
+  "commitizen"
+]
+
+[project.urls]
+Documentation = "https://github.com/Tempo-Organization/tempo_core/blob/main/README.md"
+Issues = "https://github.com/Tempo-Organization/tempo_core/issues"
+Source = "https://github.com/Tempo-Organization/tempo_core"
+
+[project.scripts]
+tempo_core = "tempo_core.__main__:main"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.env]
+requires = ["hatch-pip-compile"]
+
+[tool.hatch.envs.default]
+type = "pip-compile"
+path = ".venv"
+pip-compile-resolver = "uv"
+pip-compile-installer = "uv"
+
+[tool.hatch.envs.scripts]
+template = "scripts"
+detached = true
+installer = "uv"
+
+[tool.hatch.envs.scripts.scripts]
+clean = "git clean -d -X --force"
+refresh-deps = [
+  "hatch env remove default",
+  "python -c \"import os; os.remove('requirements.txt')\"",
+  "hatch env create default",
+]
+
+[tool.typos]
+[tool.typos.default]
+extend-words = { ue = "ue" }
+
+[tool.pyright]
+extraPaths = [".venv/Lib/site-packages"]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "semver2"
+version_provider = "pep621"
+update_changelog_on_bump = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tempo_core"]
