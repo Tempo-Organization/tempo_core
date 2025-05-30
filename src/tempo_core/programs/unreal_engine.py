@@ -29,7 +29,7 @@ def get_game_paks_dir(uproject_file_path: str, game_dir: str) -> str:
 
 
 def get_is_game_iostore(uproject_file_path: str, game_dir: str) -> bool:
-    extensions = ["ucas", "utoc"]
+    extensions = [".ucas", ".utoc", "ucas", "utoc"]
     _game_dir = game_dir
     _uproject_file_path = uproject_file_path
     is_game_iostore = False
@@ -41,6 +41,7 @@ def get_is_game_iostore(uproject_file_path: str, game_dir: str) -> bool:
         for file_extension in file_extensions:
             if file_extension in extensions:
                 is_game_iostore = True
+                break
     return is_game_iostore
 
 
