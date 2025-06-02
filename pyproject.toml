@@ -24,7 +24,6 @@ classifiers = [
 dependencies = [
   "requests",
   "psutil",
-  "pygetwindow",
   "screeninfo",
   "rich",
   "tomlkit",

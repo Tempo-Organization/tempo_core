@@ -25,7 +25,7 @@ from tempo_core.programs import (
     uasset_gui,
     umodel,
     unreal_engine,
-    stove
+    stove,
 )
 from tempo_core.threads import constant, game_monitor
 
@@ -130,13 +130,19 @@ def install_stove(*, output_directory: str, run_after_install: bool):
 
 def install_kismet_analyzer(*, output_directory: str, run_after_install: bool):
     analyzer_path = kismet_analyzer.get_kismet_analyzer_path(output_directory)
-    
+
     if not os.path.isfile(analyzer_path):
         kismet_analyzer.install_kismet_analyzer(output_directory)
-    
+
     if run_after_install:
         try:
-            subprocess.Popen(f'start cmd /k kismet-analyzer.exe -h', shell=True, cwd=os.path.dirname(kismet_analyzer.get_kismet_analyzer_path(output_directory)))
+            subprocess.Popen(
+                "start cmd /k kismet-analyzer.exe -h",
+                shell=True,
+                cwd=os.path.dirname(
+                    kismet_analyzer.get_kismet_analyzer_path(output_directory)
+                ),
+            )
         except Exception as e:
             print(f"Failed to run kismet-analyzer: {e}")
 

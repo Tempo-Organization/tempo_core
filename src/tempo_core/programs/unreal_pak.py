@@ -109,9 +109,7 @@ def make_ue4_iostore_mod(mod_name: str, final_pak_file: str):
     platform_string = unreal_engine.get_win_dir_str(
         tempo_core.settings.get_unreal_engine_dir()
     )
-    iostore_txt_location = (
-        f"{tempo_core.settings.get_working_dir()}/iostore_packaging/{mod_name}_iostore.txt"
-    )
+    iostore_txt_location = f"{tempo_core.settings.get_working_dir()}/iostore_packaging/{mod_name}_iostore.txt"
     # default_engine_patch_padding_alignment = 2048
     args = [
         # unreal_pak,
@@ -167,9 +165,7 @@ def make_ue5_iostore_mods(mod_name: str, final_pak_file: str):
     platform_string = unreal_engine.get_win_dir_str(
         tempo_core.settings.get_unreal_engine_dir()
     )
-    iostore_txt_location = (
-        f"{tempo_core.settings.get_working_dir()}/iostore_packaging/{mod_name}_iostore.txt"
-    )
+    iostore_txt_location = f"{tempo_core.settings.get_working_dir()}/iostore_packaging/{mod_name}_iostore.txt"
     # default_engine_patch_padding_alignment = 2048
     args = [
         # f'"{unreal_pak}',
