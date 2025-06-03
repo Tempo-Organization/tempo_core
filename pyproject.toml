@@ -22,13 +22,10 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-  "requests",
   "psutil",
-  "screeninfo",
-  "rich",
-  "tomlkit",
+  "requests",
   "pywinctl",
-  "dynaconf"
+  "screeninfo"
 ]
 
 [tool.hatch.envs.dev]
