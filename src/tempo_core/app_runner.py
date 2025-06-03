@@ -29,6 +29,7 @@ def run_app(
             logger.log_message(f"Command: arg: {arg}")
         logger.log_message("----------------------------------------------------")
         logger.log_message(f"Command: {command} running with the {exec_mode} enum")
+        os.makedirs(working_dir, exist_ok=True)
         if working_dir and os.path.isdir(working_dir):
             os.chdir(working_dir)
 
