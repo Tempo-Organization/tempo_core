@@ -1,7 +1,6 @@
 import os
 import shutil
 
-from rich.progress import Progress
 
 import tempo_core.app_runner
 import tempo_core.settings
@@ -260,22 +259,44 @@ def install_unreal_pak_mod(
 
 
 def move_files_for_packing(mod_name: str):
+    from tempo_core import settings
+
+    should_use_progress_bars = settings.should_show_progress_bars()
     mod_files_dict = packing.get_mod_file_paths_for_manually_made_pak_mods(mod_name)
     mod_files_dict = utilities.filter_file_paths(mod_files_dict)
 
-    with Progress() as progress:
-        task = progress.add_task(
-            f"[green]Copying files for {mod_name} mod...", total=len(mod_files_dict)
-        )
-
+    def copy_files():
         for before_file, after_file in mod_files_dict.items():
+            dest_dir = os.path.dirname(after_file)
+
             if os.path.exists(after_file):
                 if not file_io.get_do_files_have_same_hash(before_file, after_file):
                     os.remove(after_file)
-            elif not os.path.isdir(os.path.dirname(after_file)):
-                os.makedirs(os.path.dirname(after_file))
+            elif not os.path.isdir(dest_dir):
+                os.makedirs(dest_dir)
 
             if os.path.isfile(before_file):
                 shutil.copy2(before_file, after_file)
 
-            progress.update(task, advance=1)
+    if should_use_progress_bars:
+        from rich.progress import Progress
+
+        with Progress() as progress:
+            task = progress.add_task(
+                f"[green]Copying files for {mod_name} mod...", total=len(mod_files_dict)
+            )
+            for before_file, after_file in mod_files_dict.items():
+                dest_dir = os.path.dirname(after_file)
+
+                if os.path.exists(after_file):
+                    if not file_io.get_do_files_have_same_hash(before_file, after_file):
+                        os.remove(after_file)
+                elif not os.path.isdir(dest_dir):
+                    os.makedirs(dest_dir)
+
+                if os.path.isfile(before_file):
+                    shutil.copy2(before_file, after_file)
+
+                progress.update(task, advance=1)
+    else:
+        copy_files()

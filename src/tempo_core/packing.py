@@ -385,23 +385,37 @@ def make_pak_repak(*, mod_name: str, use_symlinks: bool):
 
 
 def install_repak_mod(mod_name: str, *, use_symlinks: bool):
+    should_use_progress_bars = settings.should_show_progress_bars()
     mod_files_dict = get_mod_file_paths_for_manually_made_pak_mods(mod_name)
     mod_files_dict = utilities.filter_file_paths(mod_files_dict)
 
-    with Progress() as progress:
-        task = progress.add_task(
-            f"[green]Copying files for {mod_name} mod...", total=len(mod_files_dict)
-        )
-
+    def copy_files():
         for before_file, after_file in mod_files_dict.items():
+            dest_dir = os.path.dirname(after_file)
             if os.path.exists(after_file):
                 os.remove(after_file)
-            if not os.path.isdir(os.path.dirname(after_file)):
-                os.makedirs(os.path.dirname(after_file))
+            if not os.path.isdir(dest_dir):
+                os.makedirs(dest_dir)
             if os.path.isfile(before_file):
                 shutil.copy2(before_file, after_file)
 
-            progress.update(task, advance=1)
+    if should_use_progress_bars:
+        with Progress() as progress:
+            task = progress.add_task(
+                f"[green]Copying files for {mod_name} mod...", total=len(mod_files_dict)
+            )
+            for before_file, after_file in mod_files_dict.items():
+                dest_dir = os.path.dirname(after_file)
+                if os.path.exists(after_file):
+                    os.remove(after_file)
+                if not os.path.isdir(dest_dir):
+                    os.makedirs(dest_dir)
+                if os.path.isfile(before_file):
+                    shutil.copy2(before_file, after_file)
+                progress.update(task, advance=1)
+    else:
+        copy_files()
+
     make_pak_repak(mod_name=mod_name, use_symlinks=use_symlinks)
 
 
@@ -446,7 +460,7 @@ def package_project_iostore():
 
 
 def package_project_iostore_ue4():
-    main_exec = f'"{settings.get_unreal_engine_dir()}/Engine/Build/BatchFiles/RunUAT.{file_io.get_platform_wrapper_extension()}t"'
+    main_exec = f'"{settings.get_unreal_engine_dir()}/Engine/Build/BatchFiles/RunUAT.{file_io.get_platform_wrapper_extension()}"'
     uproject_path = settings.get_uproject_file()
     editor_cmd_exe_path = unreal_engine.get_editor_cmd_path(
         settings.get_unreal_engine_dir()

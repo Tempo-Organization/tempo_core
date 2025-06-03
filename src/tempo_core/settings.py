@@ -1,4 +1,5 @@
 import os
+import sys
 import pathlib
 import shutil
 import subprocess
@@ -253,3 +254,7 @@ def is_loose_packing_enum_in_use():
         if entry["packing_type"] == "loose":
             is_in_use = True
     return is_in_use
+
+
+def should_show_progress_bars() -> bool:
+    return "--disable_progress_bars" not in sys.argv
