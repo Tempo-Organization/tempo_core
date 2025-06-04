@@ -4,6 +4,6 @@ cd /d "%~dp0"
 
 cd /d "..\..\.."
 
-git pull
+git switch dev
 
 exit /b
