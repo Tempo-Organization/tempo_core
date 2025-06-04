@@ -1,7 +1,7 @@
 repos:
 
 - repo: https://github.com/commitizen-tools/commitizen
-  rev: v1.17.0
+  rev: v4.8.2
   hooks:
     - id: commitizen
       stages: [commit-msg]
@@ -12,7 +12,7 @@ repos:
     - id: actionlint
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.11.2
+  rev: v0.11.12
   hooks:
     - id: ruff
       args: [ --fix ]
@@ -47,6 +47,6 @@ repos:
     - id: typos
 
 - repo: https://github.com/RobertCraigie/pyright-python
-  rev: v1.1.398
+  rev: v1.1.401
   hooks:
     - id: pyright
