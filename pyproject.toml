@@ -25,9 +25,7 @@ dependencies = [
   "rich",
   "psutil",
   "requests",
-  "pywinctl",
-  "screeninfo",
-  "rich"
+  "screeninfo"
 ]
 
 [tool.hatch.envs.dev]
