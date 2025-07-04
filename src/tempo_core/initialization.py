@@ -7,7 +7,6 @@ from tempo_core import (
     logger,
     main_logic,
     settings,
-    window_management,
     wrapper,
 )
 from tempo_core.programs import repak, unreal_engine
@@ -57,7 +56,7 @@ def game_exe_check():
 
 
 def initialization():
-    window_management.change_window_name("tempo")
+    # window_management.change_window_name("tempo")
     if "--logs_directory" in sys.argv:
         index = sys.argv.index("--logs_directory") + 1
         if index < len(sys.argv):

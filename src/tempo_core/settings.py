@@ -11,7 +11,6 @@ from tempo_core import (
     file_io,
     logger,
     process_management,
-    window_management,
 )
 from tempo_core.programs import unreal_engine
 
@@ -44,7 +43,7 @@ def init_settings(settings_json_path: pathlib.Path):
     settings_information.settings = raw_settings
     settings = settings_information.settings
     process_name = os.path.basename(settings["game_info"]["game_exe_path"])
-    window_management.change_window_name(settings["general_info"]["window_title"])
+    # window_management.change_window_name(settings["general_info"]["window_title"])
     auto_close_game = settings["process_kill_events"]["auto_close_game"]
     is_process_running = process_management.is_process_running(process_name)
     if auto_close_game and is_process_running:

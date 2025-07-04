@@ -89,7 +89,13 @@ def window_checks(current_state: HookStateType):
                 elif way_to_change_window == WindowAction.CLOSE:
                     window_management.close_window(window_to_change)
                 elif way_to_change_window == WindowAction.MOVE:
-                    window_management.move_window(window_to_change, window_settings)
+                    window_management.move_window(
+                        window_to_change,
+                        window_settings["position"]["x"],
+                        window_settings["position"]["y"],
+                        window_settings["resolution"]["width"],
+                        window_settings["resolution"]["height"],
+                    )
                 else:
                     logger.log_message(
                         "Monitor: invalid window behavior specified in settings"
